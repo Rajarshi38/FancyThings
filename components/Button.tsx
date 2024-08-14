@@ -7,15 +7,17 @@ export const Button = ({
   children,
   onClick,
   className,
+  type = "button",
   ...rest
 }: ButtonProps) => {
   return (
     <button
       onClick={onClick}
       className={cn(
-        "bg-cyan-700 hover:bg-cyan-600 text-white font-bold py-2 px-4 rounded transition-[background]",
+        "bg-cyan-700 hover:bg-cyan-600 text-white font-semibold py-2 px-4 rounded transition-[background]",
         className
       )}
+      type={type}
       {...rest}
     >
       {children}

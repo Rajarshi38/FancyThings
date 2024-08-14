@@ -1,8 +1,8 @@
 "use client";
 import Image from "next/image";
 import { Button } from "./Button";
-import { useAppDispatch, useAppSelector } from "../lib/hooks";
-import { addToCart, removeFromCart } from "../lib/reducers/CartReducer";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { addToCart, removeFromCart } from "../store/reducers/CartReducer";
 
 const ProductCard = ({ product }: ProductCardProps) => {
   const dispatch = useAppDispatch();
@@ -33,7 +33,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
       {/* Add to cart button */}
       {isProductAddedToCart() ? (
         <Button
-          className="bg-gray-700 hover:bg-gray-600"
+          className="bg-red-700 hover:bg-red-600"
           onClick={() => {
             dispatch(removeFromCart(product.id));
           }}

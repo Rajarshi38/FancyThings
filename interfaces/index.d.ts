@@ -2,6 +2,17 @@ interface ProductCardProps {
   product: Product;
 }
 
+interface Coupon {
+  id: number;
+  code: string;
+  description: string;
+  discount: {
+    type: DiscountType;
+    value: number;
+  };
+}
+type DiscountType = "FLAT" | "PERCENTAGE";
+
 interface Product {
   id: number;
   title: string;
@@ -12,4 +23,13 @@ interface Product {
     rate: number;
     count: number;
   };
+}
+
+interface ProductWithCount extends Product {
+  cartCount: number;
+}
+
+interface CartState {
+  cart: ProductWithCount[];
+  totalPrice: number;
 }
