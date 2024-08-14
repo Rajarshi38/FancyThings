@@ -2,14 +2,20 @@
 import { formatCurrency } from "@/utils/util";
 import { Button } from "./Button";
 import { useState } from "react";
-import CouponModal from "./CouponModal";
 import { useTotalPriceWithCoupon } from "@/hooks/useTotalPrice";
 import { useAppSelector } from "@/store/hooks";
+import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
+
+const CouponModal = dynamic(() => import("@/components/CouponModal"), {
+  ssr: false,
+});
 
 const CartFooter = () => {
   const cart = useAppSelector((state) => state.cart.cart);
   const totalPrice = useAppSelector((state) => state.cart.totalPrice);
   const [isCouponModalOpen, setIsCouponModalOpen] = useState(false);
+  const router = useRouter();
   const {
     appliedCoupon,
     applyCoupon,
@@ -26,6 +32,10 @@ const CartFooter = () => {
 
   const openModal = () => {
     setIsCouponModalOpen(true);
+  };
+
+  const handleCheckout = () => {
+    router.push("/checkout");
   };
 
   if (cart.length === 0) return null;
@@ -72,7 +82,10 @@ const CartFooter = () => {
           </div>
         </div>
         <div className="self-center">
-          <Button className="text-base sm:text-base md:text-base lg:text-base">
+          <Button
+            className="text-base sm:text-base md:text-base lg:text-base"
+            onClick={handleCheckout}
+          >
             Proceed to payment
           </Button>
         </div>

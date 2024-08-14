@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 const Header = () => {
   const cart = useAppSelector((state) => state.cart.cart);
   const pathname = usePathname();
+  if (pathname.includes("checkout")) return null;
 
   return (
     <nav className="h-16 w-full bg-gradient-to-r from-slate-900 to-slate-700 flex px-8 items-center justify-between">

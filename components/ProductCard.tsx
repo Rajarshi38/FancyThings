@@ -22,6 +22,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
       dispatch(addToCart(product));
       toast.success(`Added ${product.title} to cart successfully!`, {
         autoClose: 1400,
+        position: "top-left",
       });
     };
   };
