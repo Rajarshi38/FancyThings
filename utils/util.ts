@@ -19,14 +19,17 @@ export const computeAmountWithDiscount = (
   discountValue: number
 ) => {
   if (discountType === "FLAT" && discountValue > originalPrice) {
-    return originalPrice;
+    return { discountedAmount: originalPrice, discount: 0 };
   }
   let totalAmountAfterDiscount;
+  let discount;
   if (discountType === "FLAT") {
+    discount = discountValue;
     totalAmountAfterDiscount = originalPrice - discountValue;
   } else {
-    totalAmountAfterDiscount = (originalPrice * (100 - discountValue)) / 100;
+    discount = (originalPrice * discountValue) / 100;
+    totalAmountAfterDiscount = originalPrice - discount;
   }
 
-  return totalAmountAfterDiscount;
+  return { discountedAmount: totalAmountAfterDiscount, discount };
 };

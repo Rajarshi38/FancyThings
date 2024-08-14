@@ -7,16 +7,17 @@ export const useTotalPriceWithCoupon = (onApplyCoupon: () => void) => {
   const totalPrice = useAppSelector((state) => state.cart.totalPrice);
   const [totalAmount, setTotalAmount] = useState(totalPrice);
   const [appliedCoupon, setAppliedCoupon] = useState<Coupon | null>(null);
+  const [discountAmount, setDiscountAmount] = useState(0);
 
   useEffect(() => {
     if (appliedCoupon) {
-      setTotalAmount(
-        computeAmountWithDiscount(
-          totalPrice,
-          appliedCoupon.discount.type,
-          appliedCoupon.discount.value
-        )
+      const { discount, discountedAmount } = computeAmountWithDiscount(
+        totalPrice,
+        appliedCoupon.discount.type,
+        appliedCoupon.discount.value
       );
+      setDiscountAmount(discount);
+      setTotalAmount(discountedAmount);
     } else {
       setTotalAmount(totalPrice);
     }
@@ -35,14 +36,17 @@ export const useTotalPriceWithCoupon = (onApplyCoupon: () => void) => {
                 reject();
               } else {
                 let totalAmountAfterDiscount;
+                let discount;
                 if (coupon.discount.type === "FLAT") {
                   totalAmountAfterDiscount = totalPrice - coupon.discount.value;
+                  discount = coupon.discount.value;
                 } else {
-                  totalAmountAfterDiscount =
-                    (totalPrice * (100 - coupon.discount.value)) / 100;
+                  discount = (totalPrice * coupon.discount.value) / 100;
+                  totalAmountAfterDiscount = totalPrice - discount;
                 }
                 setAppliedCoupon(coupon);
                 onApplyCoupon();
+                setDiscountAmount(discount);
                 setTotalAmount(totalAmountAfterDiscount);
                 resolve("Coupon applied");
               }
@@ -74,5 +78,6 @@ export const useTotalPriceWithCoupon = (onApplyCoupon: () => void) => {
     appliedCoupon,
     removeCoupon,
     applyCoupon,
+    discountAmount,
   };
 };

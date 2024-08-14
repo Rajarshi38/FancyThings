@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Button } from "./Button";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { addToCart, removeFromCart } from "../store/reducers/CartReducer";
+import { toast } from "react-toastify";
 
 const ProductCard = ({ product }: ProductCardProps) => {
   const dispatch = useAppDispatch();
@@ -14,6 +15,21 @@ const ProductCard = ({ product }: ProductCardProps) => {
     );
     if (idx === -1) return false;
     return true;
+  };
+
+  const addProductToCart = (product: Product) => {
+    return () => {
+      dispatch(addToCart(product));
+      toast.success(`Added ${product.title} to cart successfully!`, {
+        autoClose: 1400,
+      });
+    };
+  };
+
+  const removeProductFromCart = (id: number) => {
+    return () => {
+      dispatch(removeFromCart(id));
+    };
   };
 
   return (
@@ -34,20 +50,12 @@ const ProductCard = ({ product }: ProductCardProps) => {
       {isProductAddedToCart() ? (
         <Button
           className="bg-red-700 hover:bg-red-600"
-          onClick={() => {
-            dispatch(removeFromCart(product.id));
-          }}
+          onClick={removeProductFromCart(product.id)}
         >
           Remove from cart
         </Button>
       ) : (
-        <Button
-          onClick={() => {
-            dispatch(addToCart(product));
-          }}
-        >
-          Add to cart
-        </Button>
+        <Button onClick={addProductToCart(product)}>Add to cart</Button>
       )}
     </div>
   );

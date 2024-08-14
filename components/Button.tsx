@@ -14,7 +14,7 @@ export const Button = ({
     <button
       onClick={onClick}
       className={cn(
-        "bg-cyan-700 hover:bg-cyan-600 text-white font-semibold py-2 px-4 rounded transition-[background]",
+        "bg-cyan-700 hover:bg-cyan-600 text-[10px] sm:text-[12px] md:text-sm lg:text-base text-white font-semibold py-2 px-4 rounded transition-[background]",
         className
       )}
       type={type}

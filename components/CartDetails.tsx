@@ -61,9 +61,19 @@ const CartDetails = () => {
                 </td>
                 <td className="cart-table-row w-[10%]">
                   <div className="flex flex-row gap-3 items-center justify-center">
-                    <Button onClick={decreaseQuantity(product.id)}>-</Button>
+                    <Button
+                      onClick={decreaseQuantity(product.id)}
+                      className="py-[6px]"
+                    >
+                      -
+                    </Button>
                     <span className="w-5 text-center">{product.cartCount}</span>
-                    <Button onClick={increaseQuantity(product.id)}>+</Button>
+                    <Button
+                      onClick={increaseQuantity(product.id)}
+                      className="py-[6px]"
+                    >
+                      +
+                    </Button>
                   </div>
                 </td>
                 <td className="cart-table-row text-right w-[10%]">
